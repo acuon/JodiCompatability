@@ -2,7 +2,8 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.JodiCompatibility" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorSecondary">@color/app_color</item>
+        <item name="colorPrimary">@color/app_color_orange</item>
     </style>
 
     <style name="Theme.JodiCompatibility" parent="Base.Theme.JodiCompatibility" />
