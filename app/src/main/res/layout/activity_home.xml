@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="vm"
             type="com.jodi.companioncompatibility.feature.home.viewmodel.HomeViewModel" />
@@ -17,13 +19,41 @@
         tools:context=".feature.home.view.HomeActivity">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="24dp"
+            android:text="@{vm.content}"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:visibility="@{vm.isLoading ? View.GONE : View.VISIBLE}" />
+
+        <TextView
+            android:id="@+id/btn"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Hello World!"
+            android:layout_margin="24dp"
+            android:background="@drawable/bg_rounded_corner_16dp"
+            android:backgroundTint="@color/app_color_orange"
+            android:gravity="center"
+            android:onClick="@{() -> vm.callGpt()}"
+            android:padding="16dp"
+            android:text="Call GPT"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:indeterminateTint="@color/app_color_orange"
+            android:visibility="@{vm.isLoading ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

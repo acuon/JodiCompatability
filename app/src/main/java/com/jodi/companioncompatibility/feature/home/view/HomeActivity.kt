@@ -10,6 +10,7 @@ import com.jodi.companioncompatibility.base.BaseActivity
 import com.jodi.companioncompatibility.databinding.ActivityHomeBinding
 import com.jodi.companioncompatibility.feature.home.NavigationHome
 import com.jodi.companioncompatibility.feature.home.viewmodel.HomeViewModel
+import com.jodi.companioncompatibility.utils.network.ResultOf
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -35,10 +36,21 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), Navigat
     }
 
     private fun setupView() {
-        binding.apply { }
+        binding.apply {
+        }
     }
 
     override fun onViewClicked(view: View?) {
 
+    }
+
+    override fun callGpt() {
+//        viewModel.chatCompletion().observe(this) {
+//            when (it) {
+//                is ResultOf.Success -> {}
+//                else -> {}
+//            }
+//        }
+        viewModel._chatCompletion()
     }
 }
