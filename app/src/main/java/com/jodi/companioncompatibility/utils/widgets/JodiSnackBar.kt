@@ -12,13 +12,13 @@ import com.jodi.companioncompatibility.utils.extensions.findSuitableParent
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.jodi.companioncompatibility.R
 
-class FlavumSnackBar(
+class JodiSnackBar(
     parent: ViewGroup,
     content: CustomSnackBar
-) : BaseTransientBottomBar<FlavumSnackBar>(parent, content, content) {
+) : BaseTransientBottomBar<JodiSnackBar>(parent, content, content) {
 
 
-    fun showSnack(): FlavumSnackBar {
+    fun showSnack(): JodiSnackBar {
         show()
         return this
     }
@@ -67,7 +67,7 @@ class FlavumSnackBar(
             return this
         }
 
-        fun make(view: View): FlavumSnackBar {
+        fun make(view: View): JodiSnackBar {
 
             val parent = view.findSuitableParent() ?: throw IllegalArgumentException(
                 "No suitable parent found from the given view. Please provide a valid view."
@@ -117,7 +117,7 @@ class FlavumSnackBar(
                 }
             }
 
-            return FlavumSnackBar(
+            return JodiSnackBar(
                 parent,
                 customView
             )
@@ -135,6 +135,6 @@ class FlavumSnackBar(
 }
 
 data class SnackBarDTO(
-    var type: FlavumSnackBar.SnackType? = null,
+    var type: JodiSnackBar.SnackType? = null,
     var message: String? = null
 )

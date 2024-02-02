@@ -11,7 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
-import com.jodi.companioncompatibility.utils.widgets.FlavumSnackBar
+import com.jodi.companioncompatibility.utils.widgets.JodiSnackBar
 import com.jodi.companioncompatibility.utils.extensions.hideSoftKeyboard
 import com.jodi.companioncompatibility.data.pref.JodiPreferences
 import kotlinx.coroutines.Dispatchers
@@ -25,7 +25,9 @@ abstract class BaseActivity<T : ViewDataBinding?, V : BaseViewModel<*>> :
     private var viewDataBinding: T? = null
 
     val pref by lazy { JodiPreferences() }
-    private var snackBar: FlavumSnackBar? = null
+    private var snackBar: JodiSnackBar? = null
+
+
 
     //injecting the viewmodel
     @Inject
@@ -56,9 +58,9 @@ abstract class BaseActivity<T : ViewDataBinding?, V : BaseViewModel<*>> :
         performDataBinding()
     }
 
-    protected fun showSnackBar(message: String?, type: FlavumSnackBar.SnackType) {
+    protected fun showSnackBar(message: String?, type: JodiSnackBar.SnackType) {
         viewDataBinding?.root?.let {
-            snackBar = FlavumSnackBar
+            snackBar = JodiSnackBar
                 .Builder()
                 .type(type)
                 .message(message)
@@ -68,7 +70,7 @@ abstract class BaseActivity<T : ViewDataBinding?, V : BaseViewModel<*>> :
         }
     }
 
-    private val snackListener = object : FlavumSnackBar.Builder.ISnackListener {
+    private val snackListener = object : JodiSnackBar.Builder.ISnackListener {
         override fun onClosed(view: View) {
             snackBar?.dismiss()
         }

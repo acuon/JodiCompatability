@@ -12,7 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
-import com.jodi.companioncompatibility.utils.widgets.FlavumSnackBar
+import com.jodi.companioncompatibility.utils.widgets.JodiSnackBar
 import com.jodi.companioncompatibility.data.pref.JodiPreferences
 import com.jodi.companioncompatibility.utils.extensions.hideSoftKeyboard
 import kotlinx.coroutines.Dispatchers
@@ -27,7 +27,7 @@ abstract class BaseFragment2<B : ViewBinding> : Fragment(), BaseFragmentCallback
     var hasInitializedRootView = false
     var savedInstanceStateBundle: Bundle? = null
     val pref by lazy { JodiPreferences() }
-    private var snackBar: FlavumSnackBar? = null
+    private var snackBar: JodiSnackBar? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,9 +54,9 @@ abstract class BaseFragment2<B : ViewBinding> : Fragment(), BaseFragmentCallback
     }
 
 
-    protected fun showSnackBar(message: String?, type: FlavumSnackBar.SnackType) {
+    protected fun showSnackBar(message: String?, type: JodiSnackBar.SnackType) {
         binding.root.let {
-            snackBar = FlavumSnackBar
+            snackBar = JodiSnackBar
                 .Builder()
                 .type(type)
                 .message(message)
@@ -66,7 +66,7 @@ abstract class BaseFragment2<B : ViewBinding> : Fragment(), BaseFragmentCallback
         }
     }
 
-    private val snackListener = object : FlavumSnackBar.Builder.ISnackListener {
+    private val snackListener = object : JodiSnackBar.Builder.ISnackListener {
         override fun onClosed(view: View) {
             snackBar?.dismiss()
         }
