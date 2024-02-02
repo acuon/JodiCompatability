@@ -1,0 +1,104 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'kotlin-parcelize'
+    id 'dagger.hilt.android.plugin'
+}
+
+android {
+    namespace = "com.jodi.companioncompatibility"
+    compileSdk 34
+
+    defaultConfig {
+        applicationId = "com.jodi.companioncompatibility"
+        minSdk = 24
+        targetSdk = 34
+        versionCode = 1
+        versionName = "1.0"
+
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = "17"
+    }
+    dataBinding {
+        enabled = true
+    }
+    buildFeatures {
+        buildConfig true
+    }
+}
+
+dependencies {
+    implementation 'androidx.core:core-ktx:1.12.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.11.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+    implementation 'com.google.android.gms:play-services-location:21.1.0'
+    implementation 'com.google.android.gms:play-services-maps:18.2.0'
+
+    implementation "com.squareup.retrofit2:converter-gson:2.9.0"
+    implementation "javax.inject:javax.inject:1"
+
+    // Room Database
+    implementation "androidx.room:room-runtime:2.5.2"
+    kapt "androidx.room:room-compiler:2.5.2"
+    // Android Room Database (if needed)
+    implementation "androidx.room:room-ktx:2.5.2"
+
+    // Gson (for JSON parsing with Retrofit)
+    implementation "com.google.code.gson:gson:2.10.1"
+
+    // WorkManager library
+    implementation "androidx.work:work-runtime:2.9.0"
+
+    // Coroutine dependencies
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3"
+
+    implementation 'androidx.work:work-runtime-ktx:2.9.0'
+
+    // Android ViewModel and LiveData (if needed)
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.7.0"
+
+    // Retrofit for API Requests
+    implementation "com.squareup.retrofit2:retrofit:2.9.0"
+    implementation "com.squareup.retrofit2:converter-gson:2.9.0"
+    implementation 'com.squareup.retrofit2:converter-scalars:2.9.0'
+
+    // Hilt (Dagger Hilt for Dependency Injection)
+    implementation "com.google.dagger:hilt-android:2.48.1"
+
+    kapt 'com.google.dagger:hilt-android-compiler:2.48.1'
+    kapt 'androidx.hilt:hilt-compiler:1.1.0'
+    implementation "androidx.activity:activity-ktx:1.8.2"
+
+    implementation 'androidx.hilt:hilt-work:1.1.0'
+    // When using Kotlin.
+    kapt 'androidx.hilt:hilt-compiler:1.1.0'
+
+    implementation "androidx.startup:startup-runtime:1.1.1"
+
+    //logging interceptor
+    implementation "com.squareup.okhttp3:okhttp:4.11.0"
+    implementation "com.squareup.okhttp3:logging-interceptor:4.11.0"
+
+    //moshi
+    def moshi = "1.13.0"
+    implementation "com.squareup.moshi:moshi:$moshi"
+    implementation "com.squareup.moshi:moshi-kotlin:$moshi"
+    implementation "com.squareup.retrofit2:converter-moshi:2.9.0"
+    implementation "org.jetbrains.kotlinx:kotlinx-metadata-jvm:0.5.0"
+}
