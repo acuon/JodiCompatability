@@ -3,11 +3,14 @@ package com.jodi.companioncompatibility.di
 import android.app.Application
 import android.content.Context
 import androidx.room.Room
+import com.jodi.companioncompatibility.BuildConfig
 import com.jodi.companioncompatibility.JodiApp
 import com.jodi.companioncompatibility.data.local.ApiCacheManager
 import com.jodi.companioncompatibility.data.local.JodiDao
 import com.jodi.companioncompatibility.data.local.JodiDatabase
 import com.jodi.companioncompatibility.data.pref.JodiPreferences
+import com.jodi.companioncompatibility.data.remote.GptService
+import com.jodi.companioncompatibility.feature.home.repository.HomeRepository
 import com.jodi.companioncompatibility.feature.home.viewmodel.HomeViewModel
 import com.jodi.companioncompatibility.feature.splash.viewmodel.SplashViewModel
 import dagger.Module
@@ -28,14 +31,26 @@ object AppModule {
 
     @Provides
     @Singleton
+    fun provideGptService(retrofit: Retrofit): GptService {
+        return retrofit.create(GptService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideHomeRepo(service: GptService): HomeRepository {
+        return HomeRepository(service)
+    }
+
+    @Provides
+    @Singleton
     fun provideSplashVM(): SplashViewModel {
         return SplashViewModel()
     }
 
     @Provides
     @Singleton
-    fun provideHomeVM(): HomeViewModel {
-        return HomeViewModel()
+    fun provideHomeVM(repository: HomeRepository): HomeViewModel {
+        return HomeViewModel(repository)
     }
 
     @Provides
@@ -64,7 +79,7 @@ object AppModule {
     @Provides
     @Singleton
     fun provideRetrofit(client: OkHttpClient): Retrofit {
-        return Retrofit.Builder().baseUrl("").client(client)
+        return Retrofit.Builder().baseUrl(BuildConfig.BASE_URL).client(client)
             .addConverterFactory(GsonConverterFactory.create()).build()
     }
 
@@ -92,14 +107,10 @@ object AppModule {
     fun provideAuthInterceptor(pref: JodiPreferences): Interceptor {
         return Interceptor { chain ->
             val requestBuilder = chain.request()
-            if (pref.isLoggedIn) {
-                val newRequestBuilder =
-                    requestBuilder.newBuilder().header("Authorization", pref.accessToken ?: "")
-                        .build()
-                chain.proceed(newRequestBuilder)
-            } else {
-                chain.proceed(requestBuilder)
-            }
+            val newRequestBuilder =
+                requestBuilder.newBuilder().header("Authorization", "Bearer ${BuildConfig.API_KEY}")
+                    .build()
+            chain.proceed(newRequestBuilder)
         }
     }
 
