@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <application
+        android:name=".JodiApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -13,7 +14,10 @@
         android:theme="@style/Theme.JodiCompatibility"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".feature.home.view.HomeActivity"
+            android:exported="true" />
+        <activity
+            android:name=".feature.splash.view.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
