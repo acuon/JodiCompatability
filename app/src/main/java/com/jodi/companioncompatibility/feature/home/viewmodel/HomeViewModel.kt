@@ -7,6 +7,7 @@ import com.jodi.companioncompatibility.feature.home.NavigationHome
 import com.jodi.companioncompatibility.feature.home.model.GptRequestBody
 import com.jodi.companioncompatibility.feature.home.model.Message
 import com.jodi.companioncompatibility.feature.home.repository.HomeRepository
+import com.jodi.companioncompatibility.utils.extensions.isNotNullOrEmpty
 import com.jodi.companioncompatibility.utils.network.ResultOf
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
@@ -21,20 +22,54 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository) 
 
     val content = ObservableField<String?>()
 
+    val userName = ObservableField<String?>()
+    val partnerName = ObservableField<String?>()
+    val userDob = ObservableField<String?>()
+    val partnerDob = ObservableField<String?>()
+    val userTob = ObservableField<String?>()
+    val partnerTob = ObservableField<String?>()
+    val userPob = ObservableField<String?>()
+    val partnerPob = ObservableField<String?>()
+
+
+    val isButtonEnabled = ObservableField<Boolean>()
+
+    private fun makeRequestContent(): String {
+        return "Please consider yourself as an astrologer who can provide insights into the future based on Vedic Numerology. You are fair and provide both optimistic and pessimistic views. You also provide both positive and negative insights. I(${userName.get()}) am interested in a person(${partnerName.get()}) who could be my spouse. I was born on ${userDob.get()} at ${userTob.get()} in the city of ${userPob.get()} The person(${partnerName.get()}) whom I(${userName.get()}) wish to be my companion was born on ${partnerDob.get()} at ${partnerTob.get()} in the city of ${partnerPob.get()} Based on Vedic numerology could you please suggest what would be the compatibility?"
+    }
+
+    private fun makeRequestBody(): GptRequestBody? {
+        return GptRequestBody(
+            model = "gpt-3.5-turbo",
+            messages = listOf(
+                Message(
+                    role = "user",
+                    content = makeRequestContent()
+                )
+            )
+        )
+    }
+
+    fun getButtonVisibility(): Boolean {
+        isButtonEnabled.set(
+            userName.get().isNotNullOrEmpty() &&
+                    userDob.get().isNotNullOrEmpty() &&
+                    userTob.get().isNotNullOrEmpty() &&
+                    userPob.get().isNotNullOrEmpty() &&
+                    partnerName.get().isNotNullOrEmpty() &&
+                    partnerDob.get().isNotNullOrEmpty() &&
+                    partnerTob.get().isNotNullOrEmpty() &&
+                    partnerPob.get().isNotNullOrEmpty()
+        )
+        return isButtonEnabled.get() ?: false
+    }
+
     fun callGpt() {
         getNavigator()?.callGpt()
     }
 
     fun _chatCompletion(
-        requestBody: GptRequestBody? = GptRequestBody(
-            model = "gpt-3.5-turbo",
-            messages = listOf(
-                Message(
-                    role = "user",
-                    content = "Please consider yourself as an astrologer who can provide insights into the future based on Vedic Numerology. You are fair and provide both optimistic and pessimistic views. You also provide both positive and negative insights. I am interested in a person who could be my spouse. I was born on 1st of May 1997 in the city of Bangalore in Karnataka. The person whom I wish to be my companion was born on 2nd of May 1997 in the city of Mysore in Karnataka. Based on Vedic numerology could you please suggest what would be the compatibility?"
-                )
-            )
-        )
+        requestBody: GptRequestBody? = makeRequestBody()
     ) {
         execute {
             setIsLoading(true)
@@ -52,15 +87,7 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository) 
     }
 
     fun chatCompletion(
-        requestBody: GptRequestBody? = GptRequestBody(
-            model = "gpt-3.5-turbo",
-            messages = listOf(
-                Message(
-                    role = "user",
-                    content = "Please consider yourself as an astrologer who can provide insights into the future based on Vedic Numerology. You are fair and provide both optimistic and pessimistic views. You also provide both positive and negative insights. I am interested in a person who could be my spouse. I was born on 1st of May 1997 in the city of Bangalore in Karnataka. The person whom I wish to be my companion was born on 2nd of May 1997 in the city of Mysore in Karnataka. Based on Vedic numerology could you please suggest what would be the compatibility?"
-                )
-            )
-        )
+        requestBody: GptRequestBody? = makeRequestBody()
     ) = liveData {
         repository.chatCompletion(requestBody).onStart {
             setIsLoading(true)

@@ -12,6 +12,7 @@ import com.jodi.companioncompatibility.data.pref.JodiPreferences
 import com.jodi.companioncompatibility.data.remote.GptService
 import com.jodi.companioncompatibility.feature.home.repository.HomeRepository
 import com.jodi.companioncompatibility.feature.home.viewmodel.HomeViewModel
+import com.jodi.companioncompatibility.feature.result.viewmodel.ResultsViewModel
 import com.jodi.companioncompatibility.feature.splash.viewmodel.SplashViewModel
 import dagger.Module
 import dagger.Provides
@@ -51,6 +52,12 @@ object AppModule {
     @Singleton
     fun provideHomeVM(repository: HomeRepository): HomeViewModel {
         return HomeViewModel(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideResultsVM(): ResultsViewModel {
+        return ResultsViewModel()
     }
 
     @Provides

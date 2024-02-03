@@ -103,6 +103,9 @@ dependencies {
     implementation "com.squareup.moshi:moshi-kotlin:$moshi"
     implementation "com.squareup.retrofit2:converter-moshi:2.9.0"
     implementation "org.jetbrains.kotlinx:kotlinx-metadata-jvm:0.5.0"
+
+    //lottie
+    implementation 'com.airbnb.android:lottie:6.0.0'
 }
 
 static def getBaseUrl() {
